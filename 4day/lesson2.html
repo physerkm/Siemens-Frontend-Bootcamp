@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+
+        var today = new Date();
+        var day = today.getDay();
+
+        switch (day) {
+            case 0:
+                console.log("Sunday");
+                break;
+            case 1:
+                console.log("Monday");
+                break;
+            case 2:
+                console.log("Tuesday");
+                break;
+            case 3:
+                console.log("Wednesday");
+                break;
+            case 4:
+                console.log("Thursay");
+                break;
+            default:
+                console.log("out of interval");
+                break    
+        }
+
+        var calculateArray = new Array (
+            {key:"arti",fun:(a, b) => a + b},
+            {key:"carpi",fun(a, b) => a * b},
+            {key:"bol",fun(a, b) => a / b},
+            {key:"custom(a, b) => a / b
+        )
+
+        function calculateShort(a, b, type) {
+
+            return calculate[type](a, b)
+        }
+
+        console.log(calculateShort(20, 5, 3))
+
+        console.log(`Calculate result: ${calculate(5,4,2)}`)
+
+        function Calculate(a, b, type) {
+            let sum=0;
+            switch (type) {
+                case 0:
+                    sum = a + b;
+                    break;
+                case 1:
+                    sum = a - b;
+                    break;
+                case 2:
+                    sum = a * b;
+                    break;
+                case 3:
+                    sum = a / b;
+                    break;
+            }
+
+            return sum;
+        }
+
+
+
+
+    </script>
+
+
+
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>

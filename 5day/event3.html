@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="bootstrap.css"/> 
+    <style>
+        .custom-show {
+            display: block;
+        }
+        .custom-hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-4 offset-md-4 my-5">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Product Registry</h5>
+                    <div id="result">
+                        <div id="divSuccess" class="alert alert-success custom-hide" role="alert">
+                            The product has been successfully registered.
+                        </div>
+                    </div>
+                    <form>
+                        <div class="mb-3">
+                            <label for="txtName" class="form-label">Product Name:</label>
+                            <input type="text" class="form-control" id="txtName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="txtPrice" class="form-label">Product Price:</label>
+                            <input type="text" class="form-control" id="txtPrice">
+                        </div>
+                        <div class="mb-3">
+                            <label for="dropColorMenu" class="form-label">Product Color:</label>
+                            <select class="form-control" id="dropColorMenu">
+                                <option value="">Choose</option>
+                                <option value="1">Red</option>
+                                <option value="2">Blue</option>
+                                <option value="3">Green</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="checkPublish">
+                            <label class="form-check-label" for="checkPublish">Will you publish?</label>
+                        </div>
+                        <div class="mb-3">
+                            <p>Select publishing time</p>
+                            <div class="form-check">
+                                <input class="form-check-input" value="15" type="radio" name="radioPublishDay">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    15 days
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input value="30" class="form-check-input" type="radio" name="radioPublishDay" checked>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    30 days
+                                </label>
+                            </div>
+                            <div aria-valuemax="45" class="form-check">
+                                <input class="form-check-input" type="radio" name="radioPublishDay">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    45 days
+                                </label>
+                            </div>
+                        </div>
+                        <button onclick="save()" type="button" class="btn btn-primary">Save</button>
+                        <button id="btnSave" type="button" class="btn btn-primary">Save 2</button>
+                        <button type="reset" class="btn btn-warning">Clear</button>                       
+                    </form>   
+                </div>
+            </div>             
+        </div>
+    </div>    
+</body>
+<script>
+    var btnSave = document.querySelector("#btnSave");
+    var dropDownColorMenu = document.querySelector("#dropColorMenu");
+
+    // Second Way
+    dropDownColorMenu.addEventListener("change", function() {
+        let text = dropDownColorMenu.options[dropDownColorMenu.selectedIndex].text;
+        console.log(text);
+    })
+
+    btnSave.addEventListener("click", function() {
+        console.log("click 2")
+    })
+
+    // First Way
+
+    // function dropColorMenuChange() {
+    //     console.log(document.querySelector("#dropColorMenu").value);
+
+    //     let dropDownColorMenu = document.querySelector("#dropColorMenu");
+    //     let text = dropDownColorMenu.options[dropDownColorMenu.selectedIndex].text;
+    //     consolo.log(text);
+    // }
+
+    var productId = 0;
+    var productList = [];
+    const divSuccess = document.querySelector('#divSuccess')
+    const divFail = document.querySelector('#divFail')
+
+    function btnLoadToForm(id){
+        console.log(id);
+    }
+
+    function loadTable() {
+        const tableBody = document.querySelector("#tableBody")
+        tableBody.innerHTML = '';
+        productList.forEach(newProduct => {
+            let newRow = document.createElement("tr");
+            newRow.innerHTML = `
+            <td>${newProduct.name}</td>
+            <td>${newProduct.price}</td>
+            <td>${newProduct.color}</td>
+            <td>${newProduct.isPublish}</td>
+            <td>${newProduct.publishDay}</td>`
+            <td><button id="btnUpdate" onclick="btnLoadToForm"
+            tableBody.appendChild(newRow);
+        })
+    }
+    function showSuccess(){
+        divSuccess.classList.remove("custom-hide");
+        divSuccess.classList.add("custom-show");
+    }
+
+    function showFail() {
+        divFail.classList.remove("custom-hide");
+        divFail.classList.add("custom-show")
+    }
+    function reset() {
+        setTimeout(function()){
+            di
+        }
+    }
+
+    function addRow(newProduct) {
+        const tableBody = document.querySelector
+    }
+
+    const divSuccess = document.querySelector('#divSuccess')
+    const divFail = document.querySelector('#divFail')    
+
+    function save() {
+            const name = document.getElementById("txtName").value;
+            const price = document.getElementById("txtPrice").value;
+
+            const color = document.querySelector("#dropColorMenu").value;
+            const isPublish = document.querySelector("#checkPublish").checked;
+            const publishDay = document.querySelector("input[name='radioPublishDay']:checked").value;
+        
+            const newProduct = {name: name, price: price, color: color, isPublish: isPublish, publishDay: publishDay}
+            
+            
+            try {
+                // Backend/API data göndereceğiz.
+                console.log(newProduct2);
+                productList.push(newProduct)
+                divSuccess.classList.remove("custom-hide");
+                divSuccess.classList.add(custom-show);
+                const tableBody = document.querySelector('#tableBody') 
+                var p = document.createElement("tr");
+                p.innerHTML=`
+                <td>${newProduct.name}</td>
+                <td>${newProduct.price}</td>
+                <td>${newProduct.name}</td>
+                <td>${newProduct.name}</td>
+                <td>${newProduct.name}</td>
+                `;
+                tableBody.appendChild(newRow);      
+            } catch (error) {
+                divFail.classList.remove("custom-hide");
+                divFail.classList.add("custom-show")
+
+                // alert("An error occured.");
+            }
+            finally {
+                setTimeout(function () {
+                    divSuccess.classList.remove("custom-show");
+                    divFail.classList.remove("custom-show");
+                    divSuccess.classList.add("custom-hide")
+                    divFail.classList.add("custom-hide")
+                }, 2000)
+            }        
+    } 
+    
+// Errors
+
+// syntax error
+// runtime error // design time / run time
+// logical error
+
+</script>
+</html>
+
+
+

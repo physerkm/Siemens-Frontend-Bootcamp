@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        /*
+        var i = "hello world";
+        const a = 25;
+
+        if (1=1) {
+            let b = 30;
+            var c = 50;
+        }
+        */
+
+        /*
+        document.write(i);
+        document.write(a);
+        */
+        // trace=0 debug=1 info=2 warning=3 error=4 critical=5
+
+        /*
+        i = "Hello world 2";
+        window.alert(i);
+        console.log({name:i});  
+        */ 
+
+        // Data Types
+        // String
+        /* let name = "erkam";
+        let number = 10;
+        let number2 = 20;
+        let hasProduct = false;
+        console.log(number + number2);
+        console.log(name+number); */
+
+        /*
+        if (hasProduct == true) {
+            console.log("ürün var");
+        }
+        else {
+            console.log("ürün yok");
+        }
+
+        console.log(null_datatype);
+        */
+
+        let name = new String("erkam"); //"erkam";
+        let number = new Number(10); //10;
+        let number2 = new Number(20); //20;
+        let hasProduct = new Boolean(false); //false;
+        let number3 = BigInt(10000000);
+        let undefined_datatype = undefined;
+        let null_datatype = null;
+        // let names = new Array("erkam", "merve", "rümeysa");
+        let now_date = new Date();
+        let product = {name:"pencil 1", price: 10.99, stock:20};
+
+        //good way
+        console.log{`${product.name}-${product.price}-${product.stock}`};
+        //bad way
+        console.log(product.name + "-" + product.price);
+
+        console.log(now_date);
+        console.log(names[0]);
+        console.log(names[1]);
+        console.log(names[2]);
+         // console.log("index of erkam" + names.indexOf("erkam"));
+    
+    </script>
+</head>
+
+<body>
+    <p>Javascript Lesson 1</p>
+    <div id="box"></div>
+    
+</body>
+
+</html>
+<script>
+    i = "abc";
+    document.getElementById("box").innerHTML = "Hello world box";
+</script>
