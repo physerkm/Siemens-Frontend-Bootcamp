@@ -23,7 +23,10 @@
 
 					<div id="result">
 						<div id="divSucceess" class="alert alert-success custom-hide" role="alert">
-							Ürün başarılı kaydedildi.
+							Ürün başarıyla kaydedildi.
+						</div>
+						<div id="divSucceessUpdate" class="alert alert-success custom-hide" role="alert">
+							Ürün başarıyla güncellendi.
 						</div>
 						<div id="divFail" class="alert alert-danger custom-hide" role="alert">
 							Bir hata meydana geldi.
@@ -33,10 +36,12 @@
 						<div class="mb-3">
 							<label for="txtName" class="form-label">Ürün ismi :</label>
 							<input type="text" class="form-control" id="txtName">
+							<p style="color:red;" id="nameError" class="errorParagraph"></p>
 						</div>
 						<div class="mb-3">
 							<label for="txtPrice" class="form-label">Ürün Fiyat :</label>
-							<input type="text" class="form-control" id="txtPrice">
+							<input type="number" class="form-control" id="txtPrice">
+							<p style="color:red;" id="priceError" class="errorParagraph"></p>
 						</div>
 						<div class="mb-3">
 							<label for="dropColorMenu" class="form-label">Ürün Renk :</label>
@@ -46,6 +51,7 @@
 								<option value="2">Mavi</option>
 								<option value="3">Yeşil</option>
 							</select>
+							<p style="color:red;" id="colorError" class="errorParagraph"></p>
 						</div>
 						<div class="mb-3 form-check">
 							<input type="checkbox" class="form-check-input" id="checkPublish">
@@ -71,11 +77,13 @@
 									45 gün
 								</label>
 							</div>
+							<p style="color:red;" id="publishError" class="errorParagraph"></p>
 						</div>
 						
 						<button id="btnSaveOrUpdate" onclick="saveOrUpdate()" type="button" class="btn btn-primary">Kaydet</button>
 						<!-- <button id="btnSave" type="button" class="btn btn-primary">Kaydet 2</button> -->
-						<button type="reset" class="btn btn-warning">Temizle</button>
+						<button type="reset" onclick="alert('Emin misiniz?')" class="btn btn-warning">Temizle</button>
+						<p id="count"></p>
 					</form>
 				</div>
 			</div>
@@ -101,7 +109,7 @@
 	// var btnSave = document.querySelector("#btnSave");
 	// var dropDownColorMenu = document.querySelector("#dropColorMenu");
 
-	// 2. way
+	// // 2. way
 	// dropDownColorMenu.addEventListener("change", function () {
 	//   let text = dropDownColorMenu.options[dropDownColorMenu.selectedIndex].text;
 	//   console.log(text);
@@ -122,9 +130,11 @@
 	//   console.log(text);
 	// }
 	var productIncreaseId = 0; // productId identity field
+	var count = 0;
 	var updateProductId = 0;
 	var productList = [];
 	const divSuccess = document.querySelector("#divSucceess")
+	const divSuccessUpdate = document.querySelector("#divSucceessUpdate")
 	const divFail = document.querySelector("#divFail")
 	const btnSaveOrUpdate = document.querySelector("#btnSaveOrUpdate");
 	let isSaveOrUpdateType = "saveType";
@@ -148,21 +158,40 @@
     	radioButtonArray.forEach(x => {
 			if (x.value == productToUpdate.publishDay) x.checked = true;
 		})
-	}
+	} 
 	
 	function loadTable() {
 		const tableBody = document.querySelector("#tableBody")
 		tableBody.innerHTML = '';
     	productList.forEach(newProduct => {
 			let newRow = document.createElement("tr");
-			newRow.innerHTML = `
-			<td>${newProduct.name}</td>
-			<td>${newProduct.price}</td>
-			<td>${newProduct.color}</td>
-			<td>${newProduct.isPublish}</td>
-			<td>${newProduct.publishDay}</td>
-			<td><button id="btnUpdate" onclick="btnLoadToForm(${newProduct.id})" type="button" class="btn btn-success">güncelle</button></td>
-			`;
+			newRow.innerHTML = ``
+			if (changed.includes(newProduct.name)) {
+				newRow.innerHTML += `<td><strong style='color:red;'>${newProduct.name}</strong></td>`
+			} else {
+				newRow.innerHTML += `<td>${newProduct.name}</td>`
+			}
+			if (changed.includes(newProduct.price)) {
+				newRow.innerHTML += `<td><strong style='color:red;'>${newProduct.price}</strong></td>`
+			} else {
+				newRow.innerHTML += `<td>${newProduct.price}</td>`
+			}
+			if (changed.includes(newProduct.color)) {
+				newRow.innerHTML += `<td><strong style='color:red;'>${newProduct.color}</strong></td>`
+			} else {
+				newRow.innerHTML += `<td>${newProduct.color}</td>`
+			}
+			if (changed.includes(newProduct.isPublish)) {
+				newRow.innerHTML += `<td><strong style='color:red;'>${newProduct.isPublish}</strong></td>`
+			} else {
+				newRow.innerHTML += `<td>${newProduct.isPublish}</td>`
+			}
+			if (changed.includes(newProduct.publishDay)) {
+				newRow.innerHTML += `<td><strong style='color:red;'>${newProduct.publishDay}</strong></td>`
+			} else {
+				newRow.innerHTML += `<td>${newProduct.publishDay}</td>`
+			}
+			newRow.innerHTML += `<td><button id="btnUpdate" onclick="btnLoadToForm(${newProduct.id})" type="button" class="btn btn-success">güncelle</button></td>`;
 			
 			tableBody.appendChild(newRow);
 		})
@@ -172,27 +201,54 @@
 		divSuccess.classList.remove("custom-hide");
     	divSuccess.classList.add("custom-show");
 	}
+	function showSuccessUpdate() {
+		divSuccessUpdate.classList.remove("custom-hide");
+    	divSuccessUpdate.classList.add("custom-show");
+	}
 	function showFail() {
 		divFail.classList.remove("custom-hide");
 		divFail.classList.add("custom-show")
 	}
 	function reset() {
+		//alert("Emin misiniz?");
 		document.querySelector("form").reset();
 		isSaveOrUpdateType = "saveType"
 		btnSaveOrUpdate.textContent = "Kaydet";
 		setTimeout(function () {
 			divSuccess.classList.remove("custom-show");
+			divSuccessUpdate.classList.remove("custom-show");
 			divFail.classList.remove("custom-show");
-			divSuccess.classList.add("custom-hide")
-			divFail.classList.add("custom-hide")
+			divSuccess.classList.add("custom-hide");
+			divSuccessUpdate.classList.add("custom-hide");
+			divFail.classList.add("custom-hide");
 		}, 2000)
 	}
 	function save() {
+		let errors = document.getElementsByClassName("errorParagraph");
+		for (let i=0;i<errors.length;i++) {
+			errors[i].innerHTML = "";
+		}
 		const name = document.getElementById("txtName").value;
+		if (name.length < 3 || name.length > 10) {
+			document.getElementById("nameError").innerHTML = "Ürün ismi 3-10 karakter arasında olmalıdır!";
+			return;
+		}
 		const price = document.getElementById("txtPrice").value;
+		if (price < 100 || price > 5000) {
+			document.getElementById("priceError").innerHTML = "Ürün fiyatı 100 ila 5000 arasında olmalıdır!";
+			return;
+		}
 		const color = document.querySelector("#dropColorMenu").value;
+		if (!color) {
+			document.getElementById("colorError").innerHTML = "Bir renk seçmelisiniz!";
+			return;
+		}
 		const isPublish = document.querySelector("#checkPublish").checked;
 		const publishDay = document.querySelector("input[name='radioPublishDay']:checked").value;
+		if (!publishDay) {
+			document.getElementById("publishError").innerHTML = "Yayınlanma süresini seçmelisiniz!";
+			return;
+		}
 		
 		productIncreaseId++;
 		const newProduct = { id: productIncreaseId, name: name, price: price, color: color, isPublish: isPublish, publishDay: publishDay }
@@ -206,26 +262,64 @@
 			showFail();
 		} finally {
 			reset();
+			count++;
+			document.getElementById("count").innerHTML = `${count} ürün var.`;
 		}
 	}
 	
 	function update() {
+		var errors = document.getElementsByClassName("errorParagraph");
+		for (let i=0;i<errors.length;i++) {
+			errors[i].innerHTML = "";
+		}
 		const name = document.getElementById("txtName").value;
+		if (name.length < 3 || name.length > 10) {
+			document.getElementById("nameError").innerHTML = "Ürün ismi 3-10 karakter arasında olmalıdır!";
+			return;
+		}
 		const price = document.getElementById("txtPrice").value;
+		if (price < 100 || price > 5000) {
+			document.getElementById("priceError").innerHTML = "Ürün fiyatı 100 ila 5000 arasında olmalıdır!";
+			return;
+		}
 		const color = document.querySelector("#dropColorMenu").value;
+		if (!color) {
+			document.getElementById("colorError").innerHTML = "Bir renk seçmelisiniz!";
+			return;
+		}
 		const isPublish = document.querySelector("#checkPublish").checked;
 		const publishDay = document.querySelector("input[name='radioPublishDay']:checked").value;
+		if (!publishDay) {
+			document.getElementById("publishError").innerHTML = "Yayınlanma süresini seçmelisiniz!";
+			return;
+		}
+		
 
 		let productToUpdateIndex = productList.findIndex(product => product.id == updateProductId);
 
-		productList[productToUpdateIndex].name = name;
-		productList[productToUpdateIndex].price = price;
-		productList[productToUpdateIndex].color = color;
-		productList[productToUpdateIndex].isPublish = isPublish;
-		productList[productToUpdateIndex].publishDay = publishDay;
-		
+		if (productList[productToUpdateIndex].name != name) {
+			productList[productToUpdateIndex].name = name;
+			changed.push(name);
+		};
+		if (productList[productToUpdateIndex].price != price) {
+			productList[productToUpdateIndex].price = price;
+			changed.push(price);
+		};
+		if (productList[productToUpdateIndex].color != color) {
+			productList[productToUpdateIndex].color = color;
+			changed.push(color);
+		};
+		if (productList[productToUpdateIndex].isPublish != isPublish) {
+			productList[productToUpdateIndex].isPublish = isPublish;
+			changed.push(isPublish);
+		};
+		if (productList[productToUpdateIndex].publishDay != publishDay) {
+			productList[productToUpdateIndex].publishDay = publishDay;
+			changed.push(publishDay);
+		};
+
 		try {
-			showSuccess();
+			showSuccessUpdate();
 			loadTable();
 		} catch (error) {
 			showFail();
@@ -235,6 +329,7 @@
 	}
 	
 	function saveOrUpdate() {
+		changed = [];
 		arrayBtnAction.find(x => x.key == isSaveOrUpdateType).func();
 	}
 	
