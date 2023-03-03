@@ -1,0 +1,16 @@
+<label for="firstName">firstName: </label>
+<input id="firstName" type="text" [formControl]="firstName">
+<p>Value: {{ firstName.value }}</p>
+
+<label for="lastName">lastName: </label>
+<input id="lastName" type="text" [formControl]="lastName">
+<p>Value: {{ lastName.value }}</p>
+
+<label for="price">Price: </label>
+<input id="price" type="text" [formControl]="price">
+<p>Value: {{ price.value }}</p>
+
+<label for="category">Category: </label>
+<input id="category" type="text" [formControl]="category">
+<p>Value: {{ category.value }}</p>
+<button type="button" (click)="updateName()">Update name</button>
