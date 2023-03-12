@@ -4,11 +4,7 @@ import { ajax } from 'rxjs/ajax';
 import { FakeserviceService } from './fakeservice.service';
 
 
-interface product {
-  id: number;
-  name: string;
-  price: number;
-}
+interface product {id: number; name: string; price: number;}
 
 @Component({
   selector: 'app-root',

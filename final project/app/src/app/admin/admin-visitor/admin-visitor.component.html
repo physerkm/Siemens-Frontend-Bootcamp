@@ -1,0 +1,31 @@
+<table class="table mt-5">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>E-mail</th>
+      <th>Birthdate</th>
+      <th>Content</th>
+      <th>Content Type</th>
+      <th>Publish Date Expire</th>
+      <th>Confirm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-text" *ngFor="let visitor of visitorService.visitors">
+      <th>{{ visitor?.name }}</th>
+      <th>{{ visitor?.email }}</th>
+      <th>{{ visitor?.birthDate | date:'dd-MM-YYY' }}</th>
+      <th>{{ visitor?.content }}</th>
+      <th>{{ visitor?.contentType }}</th>
+      <th>{{ visitor?.publishdateExpire }}</th>
+
+
+      <label for="">Confirm</label>
+      <input type="checkbox" [(ngModel)]="isChecked"
+        (change)="checkValue(isChecked ? visitor.isConfirmed = true : visitor.isConfirmed = false)"
+        [disabled]="visitor.isConfirmed">
+      <button class="btn btn-danger" (click)="visitorService.deleteVisitor(visitor.email)">Delete</button>
+      <th>{{ visitor?.isConfirmed }}</th>
+    </tr>
+  </tbody>
+</table>
